@@ -1,0 +1,28 @@
+# The first line is the version of docker-compose
+version: "3"
+
+# Next define the services that make up the application
+# app is the name of our service
+# we're gonna have a service called app, and the build section
+# we set to . which is the current directory
+services:
+  app:
+    build:
+      context: .
+# Next let's do port configuration
+# we want to map the project from port 8000 on our host to 8000 on our image
+    ports:
+      - "8000:8000"
+# volume allows us to get the updates we make to our docker container in real time
+# maps the directory in our project to the app directory in our docker image
+    volumes:
+      - ./app:/app
+# type the command to run application in docker container
+# use ">" to write commands on the next line
+# sh -c means run shell command
+# what this does: runs django development server on all ip addresses on port 8000
+# so now we can run and connect to our application on port 8000
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+
+# to run this type: docker-compose run app sh -c "django-admin.py start project app ."
