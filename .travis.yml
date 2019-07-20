@@ -1,7 +1,7 @@
 # first line of travis file is what language to expect
 # Travis is used to run docker image which has 3.7 so
 # version doesn't matter that much
-langugage: python
+language: python
 python:
   -"3.6"
 
