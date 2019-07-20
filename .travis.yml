@@ -1,9 +1,9 @@
 # first line of travis file is what language to expect
 # Travis is used to run docker image which has 3.7 so
 # version doesn't matter that much
-language: python
+language: python #spelling error 1
 python:
-  - "3.6"
+  - "3.6" # no space error 2
 
 services:
   - docker
