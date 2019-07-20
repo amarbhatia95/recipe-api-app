@@ -1,0 +1,8 @@
+[flake8]
+# add exclusion to exclude automated scripts and tools created by django
+# django works to the 100 character limit but python recommends 79
+exclude =
+  migrations,
+  __pycache__,
+  manage.py,
+  settings.py
