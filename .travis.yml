@@ -1,0 +1,21 @@
+# first line of travis file is what language to expect
+# Travis is used to run docker image which has 3.7 so
+# version doesn't matter that much
+langugage: python
+python:
+  -"3.6"
+
+services:
+  - docker
+
+before_script: pip install docker-compose
+
+# docker-compose to run our tests
+# we want to run our linting tool too, which is flake8
+script:
+  - docker-compose run app sh -c "python manage.py test && flake8"
+
+# everytime we push a change to github travis will spin up a
+# python server running python 3.6 which will make the docker
+# service available and use pip to install docker-compose
+# Finally, it will run our script
