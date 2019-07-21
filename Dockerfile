@@ -13,8 +13,16 @@ ENV PYTHONUNBUFFERED 1
 # Copy requirements file from local to docker image building
 COPY ./requirements.txt /requirements.txt
 
+# Install postgres QL client
+# APK is the name of the package manager,Update the registery before we add it
+# No cache means we don't want to have it as a file on our container
+RUN apk add --update --no-cache postgresql-client
+RUN apk add --update --no-cache --virtual .tmp-build-deps \
+      gcc libc-dev linux-headers postgresql-dev
+
 # Takes the requirements file and installs it using pip to docker image
 RUN pip install -r /requirements.txt
+RUN apk del .tmp-build-deps
 
 # Make directory within docker image that we can use to store app source code
 # Create empty directory on docker image called app
