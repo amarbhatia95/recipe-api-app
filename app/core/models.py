@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                         PermissionsMixin
+from django.conf import settings
+
+
 '''Everytime you make a change here you must run migrations command again'''
 
 
@@ -38,3 +41,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     # it's username by default so we need to change it to email address
     USERNAME_FIELD = 'email'
+
+
+class Tag(models.Model):
+    """Tag to be used for a recipe"""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
