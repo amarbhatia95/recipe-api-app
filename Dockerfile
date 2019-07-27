@@ -16,9 +16,9 @@ COPY ./requirements.txt /requirements.txt
 # Install postgres QL client
 # APK is the name of the package manager,Update the registery before we add it
 # No cache means we don't want to have it as a file on our container
-RUN apk add --update --no-cache postgresql-client
+RUN apk add --update --no-cache postgresql-client jpeg-dev
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
-      gcc libc-dev linux-headers postgresql-dev
+      gcc libc-dev linux-headers postgresql-dev musl-dev zlib zlib-dev
 
 # Takes the requirements file and installs it using pip to docker image
 RUN pip install -r /requirements.txt
@@ -35,5 +35,9 @@ COPY ./app /app
 # Create user that will run our application using adduser
 # Finally, switch to that user
 # This is secure if you get hacked they only have the user profile
+RUN mkdir -p /vol/web/media
+RUN mkdir -p /vol/web/static
 RUN adduser -D user
+RUN chown -R user:user /vol/
+RUN chmod -R 755 /vol/web
 USER user
